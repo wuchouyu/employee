@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tut.employee.mapper.EmploymentMapper">
+  <resultMap id="BaseResultMap" type="com.tut.employee.model.Employment">
+    <id column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="sname" jdbcType="VARCHAR" property="sname" />
+    <result column="college" jdbcType="VARCHAR" property="college" />
+    <result column="profession" jdbcType="VARCHAR" property="profession" />
+    <result column="sclass" jdbcType="VARCHAR" property="sclass" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="cname" jdbcType="VARCHAR" property="cname" />
+    <result column="province" jdbcType="VARCHAR" property="province"/>
+    <result column="caddress" jdbcType="VARCHAR" property="caddress" />
+    <result column="station" jdbcType="VARCHAR" property="station" />
+  </resultMap>
+  <resultMap id="provinceResult" type="java.util.HashMap">
+    <result column="province" javaType="java.lang.String" property="key"/>
+    <result column="count" javaType="java.lang.Integer" property="value"/>
+  </resultMap>
+  <resultMap id="collegeResult" type="java.util.HashMap">
+    <result column="college" javaType="java.lang.String" property="key"/>
+    <result column="count" javaType="java.lang.Integer" property="value"/>
+  </resultMap>
+  <resultMap id="professionResult" type="java.util.HashMap">
+    <result column="profession" javaType="java.lang.String" property="key"/>
+    <result column="count" javaType="java.lang.Integer" property="value"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    sid, sname, college, profession, sclass, cid, cname, province, caddress, station
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from employment
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from employment
+  </select>
+  <select id="countByProvince" resultMap="provinceResult">
+    select province, count(province) as count
+    from employment
+    group by province
+  </select>
+  <select id="countByCollege" resultMap="collegeResult">
+    select college, count(college) as count
+    from employment
+    group by college
+  </select>
+  <select id="countByProfession" parameterType="java.lang.String" resultMap="professionResult">
+    select profession,count(profession) as count
+    from employment
+    where college = #{college,jdbcType=VARCHAR}
+    group by profession
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from employment
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tut.employee.model.Employment">
+    insert into employment (sid, sname, college, 
+      profession, sclass, cid, 
+      cname, province, caddress,
+      station
+      )
+    values (#{sid,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, #{college,jdbcType=VARCHAR}, 
+      #{profession,jdbcType=VARCHAR}, #{sclass,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER}, 
+      #{cname,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{caddress,jdbcType=VARCHAR},
+       #{station,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tut.employee.model.Employment">
+    insert into employment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="sname != null">
+        sname,
+      </if>
+      <if test="college != null">
+        college,
+      </if>
+      <if test="profession != null">
+        profession,
+      </if>
+      <if test="sclass != null">
+        sclass,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="cname != null">
+        cname,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="caddress != null">
+        caddress,
+      </if>
+      <if test="station != null">
+        station,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null">
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null">
+        #{college,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="sclass != null">
+        #{sclass,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="cname != null">
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="caddress != null">
+        #{caddress,jdbcType=VARCHAR},
+      </if>
+      <if test="station != null">
+        #{station,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tut.employee.model.Employment">
+    update employment
+    set
+    <!--cname = #{cname,jdbcType=VARCHAR},
+    caddress = #{caddress,jdbcType=VARCHAR},
+    contacts = #{contacts,jdbcType=VARCHAR},
+    phone = #{phone,jdbcType=VARCHAR},
+    email = #{email,jdbcType=VARCHAR}-->
+    province = #{province,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>

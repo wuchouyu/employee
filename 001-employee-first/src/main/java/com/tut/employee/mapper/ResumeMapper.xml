@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tut.employee.mapper.ResumeMapper">
+  <resultMap id="BaseResultMap" type="com.tut.employee.model.Resume">
+    <result column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+  </resultMap>
+  <select id="select" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from resume
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.tut.employee.model.Resume">
+    insert into resume (sid, path)
+    values (#{sid,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tut.employee.model.Resume">
+    insert into resume
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="name != null">
+        path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tut.employee.model.Resume">
+    update resume
+    <set>
+      <if test="path != null">
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>

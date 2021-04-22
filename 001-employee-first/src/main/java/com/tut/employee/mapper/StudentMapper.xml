@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tut.employee.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.tut.employee.model.Student">
+    <result column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="sname" jdbcType="VARCHAR" property="sname" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="sex" jdbcType="CHAR" property="sex" />
+    <result column="saddress" jdbcType="VARCHAR" property="saddress" />
+    <result column="college" jdbcType="VARCHAR" property="college" />
+    <result column="profession" jdbcType="VARCHAR" property="profession" />
+    <result column="sclass" jdbcType="VARCHAR" property="sclass" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="id" jdbcType="VARCHAR" property="id" />
+  </resultMap>
+  <resultMap id="collegeResult" type="java.util.HashMap">
+    <result column="college" javaType="java.lang.String" property="key"/>
+    <result column="count" javaType="java.lang.Integer" property="value"/>
+  </resultMap>
+  <resultMap id="professionResult" type="java.util.HashMap">
+    <result column="profession" javaType="java.lang.String" property="key"/>
+    <result column="count" javaType="java.lang.Integer" property="value"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    sid, sname, birthday, sex, saddress, college, profession, sclass, phone, id
+  </sql>
+  <select id="selectStudents" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from student
+    where sid like CONCAT('%',#{sid,jdbcType=INTEGER},'%')
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from student
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from student
+  </select>
+  <select id="countByCollege" resultMap="collegeResult">
+    select college,count(college) as count
+    from student
+    group by college
+  </select>
+  <select id="countByProfession" resultMap="professionResult">
+    select profession,count(profession) as count
+    from student
+    where college = #{college,jdbcType=VARCHAR}
+    group by profession
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from student
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tut.employee.model.Student">
+    insert into student ( sname, birthday,
+      sex, saddress, college, 
+      profession, sclass, phone)
+    values ( #{sname,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE},
+      #{sex,jdbcType=CHAR}, #{saddress,jdbcType=VARCHAR}, #{college,jdbcType=VARCHAR}, 
+      #{profession,jdbcType=VARCHAR}, #{sclass,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tut.employee.model.Student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="sname != null">
+        sname,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="saddress != null">
+        saddress,
+      </if>
+      <if test="college != null">
+        college,
+      </if>
+      <if test="profession != null">
+        profession,
+      </if>
+      <if test="sclass != null">
+        sclass,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null">
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="saddress != null">
+        #{saddress,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null">
+        #{college,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="sclass != null">
+        #{sclass,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tut.employee.model.Student">
+    update Student
+    <set>
+      <if test="sname != null">
+        sname = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="saddress != null">
+        saddress =#{saddress,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null">
+        college =#{college,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        profession =#{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="sclass != null">
+        sclass =#{sclass,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone =#{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        id =#{id,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tut.employee.model.Student">
+    update student
+    set
+      sname = #{sname,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      sex = #{sex,jdbcType=CHAR},
+      saddress =#{saddress,jdbcType=VARCHAR},
+      college =#{college,jdbcType=VARCHAR},
+      profession =#{profession,jdbcType=VARCHAR},
+      sclass =#{sclass,jdbcType=VARCHAR},
+      phone =#{phone,jdbcType=VARCHAR},
+      id =#{id,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>
