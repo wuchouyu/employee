@@ -3,20 +3,32 @@ package com.tut.employee;
 import com.github.javafaker.Faker;
 import com.tut.employee.mapper.CompanyMapper;
 import com.tut.employee.mapper.EmploymentMapper;
+<<<<<<< HEAD
 import com.tut.employee.mapper.PositionMapper;
 import com.tut.employee.mapper.StudentMapper;
 import com.tut.employee.model.*;
 import com.tut.employee.utils.DateUtil;
 import com.tut.employee.web.service.DemandService;
+=======
+import com.tut.employee.mapper.StudentMapper;
+import com.tut.employee.mapper.UserMapper;
+import com.tut.employee.model.*;
+>>>>>>> 78c1550c70b4444f978fe68d9918bd073881bade
 import com.tut.employee.web.service.UserService;
 import com.tut.employee.web.service.impl.StudentServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+<<<<<<< HEAD
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 
+=======
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.awt.print.PrinterGraphics;
+>>>>>>> 78c1550c70b4444f978fe68d9918bd073881bade
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -33,6 +45,7 @@ class ApplicationTests {
     private EmploymentMapper employmentMapper;
     @Autowired
     private UserService userService;
+<<<<<<< HEAD
     @Autowired
     private DemandService demandService;
     @Autowired
@@ -45,6 +58,12 @@ class ApplicationTests {
             "5、熟悉前端开发，熟悉Web前端技术\n" +
             "6、有前端开源项目或作品者优先；\n" +
             "7、有较强的自学及研究能力，工作积极主动，具有良好的沟通能力，团队合作精神，能承担工作压力。");
+=======
+
+    @Test
+    void contextLoads() {
+    }
+>>>>>>> 78c1550c70b4444f978fe68d9918bd073881bade
 
     public String createCname(Integer n){
         Faker fakerWithCN  = new Faker(Locale.CHINA);
@@ -76,6 +95,7 @@ class ApplicationTests {
     }
 
     public String createStation(){
+<<<<<<< HEAD
         String[] stations = {"前端工程师","后端开发","大数据工程师","汽车机械工程师","测试开发","产品设计师","人力资源","化学工艺师",
                 "产品经理","销售","辅导老师","新媒体运营","造价师","保险推销员","算法工程师","建筑工程师","海员"
                             };
@@ -85,6 +105,11 @@ class ApplicationTests {
     public String createSalary(){
         String[] salary = {"4000~5000","4500~6000","5000~6500","4500~6000","7500~8500","7000~9000"};
         return salary[(int)(salary.length*random())];
+=======
+        String[] stations = {"前端工程师","后端开发","大数据工程师","汽车机械工程师","测试开发","产品设计师","人力资源","化学工艺师"
+                            };
+        return null;
+>>>>>>> 78c1550c70b4444f978fe68d9918bd073881bade
     }
 
     @Test
@@ -186,6 +211,7 @@ class ApplicationTests {
 
     @Test
     public void TestRegister(){
+<<<<<<< HEAD
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         for(int i = 45670502; i < 45670734; i++){
             User user = new User();
@@ -230,5 +256,14 @@ class ApplicationTests {
                 position.setSalary(createSalary());
                 positionMapper.insert(position);
             }
+=======
+        for(int i = 22000001; i < 22004234; i++){
+            User user = new User();
+            user.setUser_id(i);
+            user.setPassword(Integer.toString(i).substring(2));
+            user.setRole("USER");
+            userService.addUser(user);
+        }
+>>>>>>> 78c1550c70b4444f978fe68d9918bd073881bade
     }
 }

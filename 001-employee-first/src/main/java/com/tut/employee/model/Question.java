@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.tut.employee.model;
 
 import java.util.Date;
@@ -72,4 +73,80 @@ public class Question {
     public void setState(String state) {
         this.state = state;
     }
+=======
+package com.tut.employee.model;
+
+import java.util.Date;
+
+public class Question {
+    private Integer qid;
+
+    private Integer sid;
+
+    private Integer cid;
+
+    private String cname;
+
+    private Date time;
+
+    private String comment;
+
+    private String state;
+
+    public Integer getQid() {
+        return qid;
+    }
+
+    public void setQid(Integer qid) {
+        this.qid = qid;
+    }
+
+    public Integer getSid() {
+        return sid;
+    }
+
+    public void setSid(Integer sid) {
+        this.sid = sid;
+    }
+
+    public Integer getCid() {
+        return cid;
+    }
+
+    public void setCid(Integer cid) {
+        this.cid = cid;
+    }
+
+    public String getCname() {
+        return cname;
+    }
+
+    public void setCname(String cname) {
+        this.cname = cname;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+>>>>>>> 78c1550c70b4444f978fe68d9918bd073881bade
 }

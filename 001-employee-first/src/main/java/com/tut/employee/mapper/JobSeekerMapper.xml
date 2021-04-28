@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tut.employee.mapper.JobSeekerMapper">
@@ -111,4 +112,121 @@
     where sid = #{sid,jdbcType=INTEGER}
       and pid = #{pid,jdbcType=INTEGER}
   </update>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tut.employee.mapper.JobSeekerMapper">
+  <resultMap id="BaseResultMap" type="com.tut.employee.model.JobSeeker">
+    <id column="jid" jdbcType="INTEGER" property="jid" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="pname" jdbcType="VARCHAR" property="pname" />
+    <result column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="sname" jdbcType="VARCHAR" property="sname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    jid, cid, pid, pname, sid, sname
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from job_seeker
+    where jid = #{jid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from job_seeker
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <select id="selectBySid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from job_seeker
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from job_seeker
+    where jid = #{jid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tut.employee.model.JobSeeker">
+    insert into job_seeker (jid, cid, pid, 
+      pname, sid, sname)
+    values (#{jid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, 
+      #{pname,jdbcType=VARCHAR}, #{sid,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tut.employee.model.JobSeeker">
+    insert into job_seeker
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jid != null">
+        jid,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="pname != null">
+        pname,
+      </if>
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="sname != null">
+        sname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jid != null">
+        #{jid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="pname != null">
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null">
+        #{sname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tut.employee.model.JobSeeker">
+    update job_seeker
+    <set>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="pname != null">
+        pname = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null">
+        sid = #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null">
+        sname = #{sname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where jid = #{jid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tut.employee.model.JobSeeker">
+    update job_seeker
+    set cid = #{cid,jdbcType=INTEGER},
+      pid = #{pid,jdbcType=INTEGER},
+      pname = #{pname,jdbcType=VARCHAR},
+      sid = #{sid,jdbcType=INTEGER},
+      sname = #{sname,jdbcType=VARCHAR}
+    where jid = #{jid,jdbcType=INTEGER}
+  </update>
+>>>>>>> 78c1550c70b4444f978fe68d9918bd073881bade
 </mapper>
