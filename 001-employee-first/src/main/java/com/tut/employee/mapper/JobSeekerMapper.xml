@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tut.employee.mapper.JobSeekerMapper">
+  <resultMap id="BaseResultMap" type="com.tut.employee.model.JobSeeker">
+    <id column="sid" jdbcType="INTEGER" property="sid" />
+    <id column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="cname" jdbcType="VARCHAR" property="cname" />
+    <result column="pname" jdbcType="VARCHAR" property="pname" />
+    <result column="sname" jdbcType="VARCHAR" property="sname" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sid, pid, cid, cname, pname, sname, time, state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.tut.employee.model.JobSeekerKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from job_seeker
+    where sid = #{sid,jdbcType=INTEGER}
+      and pid = #{pid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from job_seeker
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <select id="selectBySid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from job_seeker
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.tut.employee.model.JobSeekerKey">
+    delete from job_seeker
+    where sid = #{sid,jdbcType=INTEGER}
+      and pid = #{pid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tut.employee.model.JobSeeker">
+    insert into job_seeker (sid, pid, cid, 
+      cname, pname, sname,
+      time, state )
+    values (#{sid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, 
+      #{cname,jdbcType=VARCHAR}, #{pname,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR},
+      #{time,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tut.employee.model.JobSeeker">
+    insert into job_seeker
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="cname != null">
+        cname,
+      </if>
+      <if test="pname != null">
+        pname,
+      </if>
+      <if test="sname != null">
+        sname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="cname != null">
+        #{cname,jdbcType=VARCHAR}
+      </if>
+      <if test="pname != null">
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="sname != null">
+        #{sname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tut.employee.model.JobSeeker">
+    update job_seeker
+    <set>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="pname != null">
+        pname = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="sname != null">
+        sname = #{sname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+      and pid = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tut.employee.model.JobSeekerKey">
+    update job_seeker
+    set state = "已查看"
+    where sid = #{sid,jdbcType=INTEGER}
+      and pid = #{pid,jdbcType=INTEGER}
+  </update>
+</mapper>

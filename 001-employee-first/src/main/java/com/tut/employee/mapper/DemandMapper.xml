@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tut.employee.mapper.DemandMapper">
+  <resultMap id="BaseResultMap" type="com.tut.employee.model.Demand">
+    <id column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="profession" jdbcType="VARCHAR" property="profession"/>
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="salary" jdbcType="VARCHAR" property="salary" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sid, job, profession, province, salary
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from demand
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <select id="queryDemand" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from demand
+    where
+    <if test="province != null">
+      province like CONCAT('%', #{province,jdbcType=VARCHAR}, '%') and
+    </if>
+    <if test="profession != null">
+      profession like CONCAT('%', #{profession,jdbcType=VARCHAR}, '%') and
+    </if>
+    <if test="job != null">
+      job like CONCAT('%', #{job,jdbcType=VARCHAR}, '%') and
+    </if>
+    1 > 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from demand
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tut.employee.model.Demand">
+    insert into demand (sid, job, profession,
+    province, salary)
+    values (#{sid,jdbcType=INTEGER}, #{job,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR},
+    #{province,jdbcType=VARCHAR}, #{salary,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tut.employee.model.Demand">
+    insert into demand
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="job != null">
+        job,
+      </if>
+      <if test="profession != null">
+        profession,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="salary != null">
+        salary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="job != null">
+        #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null">
+        #{salary,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tut.employee.model.Demand">
+    update demand
+    <set>
+      <if test="job != null">
+        job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="professin != null">
+        profession = #{profession,jdbcTyp=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null">
+        salary = #{salary,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tut.employee.model.Demand">
+    update demand
+    set job = #{job,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      salary = #{salary,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>
